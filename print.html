@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Printing your strip…</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="styles/print.css" />
+  </head>
+  <body>
+    <header>
+      <button class="back-btn" onclick="window.location.href = 'capture.html'">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path d="M19 12H5M12 5l-7 7 7 7" />
+        </svg>
+        Retake
+      </button>
+    </header>
+
+    <div class="print-scene">
+      <div class="steps-wrapper">
+        <div class="step-item">
+          <div class="step done">1</div>
+          <div class="step-label">Design</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-item">
+          <div class="step done">2</div>
+          <div class="step-label">Mode</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-item">
+          <div class="step done">3</div>
+          <div class="step-label">Capture</div>
+        </div>
+        <div class="step-line"></div>
+        <div class="step-item">
+          <div class="step active">4</div>
+          <div class="step-label">Download</div>
+        </div>
+      </div>
+
+      <!-- Printer + strip share one container so printer masks the strip -->
+      <div class="printer-strip-wrap">
+        <!-- Printer machine -->
+        <div class="printer-machine" id="printer-machine">
+          <div class="printer-body">
+            <div class="printer-logo">
+              <span class="printer-logo-text">Vendhee's Booth</span>
+              <div class="printer-lights">
+                <div class="printer-light green" id="light-green"></div>
+                <div class="printer-light amber"></div>
+              </div>
+            </div>
+            <div class="printer-progress-track">
+              <div class="printer-progress-fill" id="progress-fill"></div>
+            </div>
+          </div>
+          <div class="printer-base"></div>
+        </div>
+
+        <!-- Strip emerges here, masked by printer body above -->
+        <div class="strip-exit-zone" id="strip-exit-zone">
+          <div class="strip-paper" id="strip-paper">
+            <canvas id="print-canvas"></canvas>
+            <div class="strip-heat" id="strip-heat"></div>
+            <div class="strip-tear"></div>
+          </div>
+        </div>
+      </div>
+      <!-- /.printer-strip-wrap -->
+
+      <p class="print-status" id="print-status">Warming up the printer…</p>
+
+      <!-- Actions shown after print completes -->
+      <div class="done-actions" id="done-actions">
+        <a
+          class="btn-primary btn-download"
+          id="btn-download"
+          href="#"
+          download="vendees-booth-strip.png"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path
+              d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"
+            />
+          </svg>
+          Save Strip
+        </a>
+        <button
+          class="btn-ghost"
+          onclick="window.location.href = 'capture.html'"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path
+              d="M1 4v6h6M23 20v-6h-6M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15"
+            />
+          </svg>
+          Retake Photos
+        </button>
+        <button class="btn-text" onclick="window.location.href = 'index.html'">
+          Start over with a new design →
+        </button>
+      </div>
+    </div>
+
+    <!-- hidden work canvas -->
+    <canvas id="work-canvas" style="display: none"></canvas>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/print.js"></script>
+  </body>
+</html>

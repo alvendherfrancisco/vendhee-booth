@@ -1,0 +1,490 @@
+/* ─── Reset ──────────────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Design tokens ──────────────────────────────────────────────────────────── */
+
+:root {
+  /* Koi × Clover palette */
+  --koi-mist: #ffffffd9;
+  --koi-blush: #ffdee8;
+  --koi-rose: #db5a70;
+  --clover-light: #cee289;
+  --clover-deep: #457045;
+  --pond-soil: #3a2c2a;
+  --stone-moss: #4a3633;
+  --lotus-white: #fffdf9;
+  --pond-shadow: rgba(168, 157, 155, 0.18);
+
+  /* Semantic aliases (keep old names pointing to new palette) */
+  --cream: var(--koi-mist);
+  --blush: var(--koi-blush);
+  --rose: var(--clover-light);
+  --deep-rose: var(--koi-rose);
+  --deep-clover: var(--clover-deep);
+  --text: var(--pond-soil);
+  --text-light: var(--stone-moss);
+  --white: var(--lotus-white);
+  --shadow: var(--pond-shadow);
+
+  /* Font family */
+  --font-body: "Poppins", sans-serif;
+
+  /* Font sizes */
+  --fs-xxs: 0.625rem;
+  --fs-xs: 0.6875rem;
+  --fs-sm: 0.8125rem;
+  --fs-base: 0.875rem;
+  --fs-md: 0.9rem;
+  --fs-lg: 0.95rem;
+  --fs-xl: 1rem;
+  --fs-3xl: 1.2rem;
+  --fs-4xl: 1.3rem;
+  --fs-countdown: 7rem;
+
+  /* Font weights */
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+
+  /* Border radii */
+  --radius-pill: 3.125rem;
+  --radius-circle: 50%;
+  --radius-xl: 1.5rem;
+  --radius-lg: 1.375rem;
+  --radius-md: 1.25rem;
+  --radius-card: 0.875rem;
+  --radius-sm: 0.75rem;
+  --radius-xs: 0.625rem;
+  --radius-2xs: 0.5rem;
+  --radius-line: 0.125rem;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.375rem;
+  --space-3: 0.5rem;
+  --space-4: 0.625rem;
+  --space-5: 0.75rem;
+  --space-6: 0.875rem;
+  --space-7: 1rem;
+  --space-8: 1.125rem;
+  --space-9: 1.25rem;
+  --space-10: 1.375rem;
+  --space-12: 1.5rem;
+  --space-14: 1.75rem;
+  --space-16: 2rem;
+  --space-18: 2.25rem;
+  --space-20: 2.5rem;
+  --space-24: 3rem;
+  --space-28: 3.5rem;
+  --space-32: 4rem;
+  --space-40: 5rem;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.22s ease;
+  --transition-bounce: 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-spring: 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Shadows — warm rose-toned to match koi palette */
+  --shadow-sm: 0 0.25rem 1.25rem var(--pond-shadow);
+  --shadow-md: 0 0.5rem 1.75rem var(--pond-shadow);
+  --shadow-lg: 0 0.75rem 2.25rem var(--pond-shadow);
+  --shadow-xl: 0 0.5rem 2.5rem var(--pond-shadow);
+  --shadow-btn: 0 0.25rem 1rem rgba(240, 117, 138, 0.28);
+  --shadow-btn-hover: 0 0.5rem 1.5rem rgba(240, 117, 138, 0.42);
+  --shadow-clover: 0 0.25rem 1rem rgba(69, 112, 69, 0.22);
+}
+
+/* ─── Page-entry animation ───────────────────────────────────────────────────── */
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--koi-mist);
+  min-height: 100vh;
+  color: var(--text);
+  overflow-x: hidden;
+  animation: page-fade-in 0.45s ease both;
+}
+
+/* Subtle koi-pond petal bg */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse 55% 35% at 15% 20%,
+      rgba(255, 222, 232, 0.28) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 45% 40% at 85% 75%,
+      rgba(206, 226, 137, 0.18) 0%,
+      transparent 70%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Header ──────────────────────────────────────────────────────────────────── */
+
+header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-9) var(--space-12);
+  border-bottom: 0.0625rem solid var(--koi-blush);
+  background: rgba(255, 253, 249, 0.88);
+  backdrop-filter: blur(0.75rem);
+  animation: page-fade-in 0.35s ease both;
+}
+
+.logo {
+  width: 7rem;
+  margin: 0 auto;
+  cursor: pointer;
+  animation: logo-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+@keyframes logo-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: var(--fs-base);
+  color: var(--stone-moss);
+  transition:
+    color var(--transition-fast),
+    gap var(--transition-bounce);
+}
+.back-btn:hover {
+  color: var(--koi-rose);
+  gap: var(--space-5);
+}
+.back-btn svg {
+  width: 1rem;
+  transition: transform var(--transition-bounce);
+}
+.back-btn:hover svg {
+  transform: translateX(-3px);
+}
+
+/* ─── Steps ───────────────────────────────────────────────────────────────────── */
+
+.steps-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  align-items: flex-start;
+  margin: var(--space-14) 0 0;
+  animation: page-fade-in 0.4s ease 0.1s both;
+}
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.step {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-circle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  border: 0.125rem solid var(--koi-blush);
+  color: var(--stone-moss);
+  transition: all var(--transition-spring);
+}
+.step.active {
+  background: var(--clover-light);
+  border-color: var(--clover-light);
+  color: var(--clover-deep);
+  box-shadow: 0 0 0 4px rgba(206, 226, 137, 0.28);
+  animation: step-pulse 2.4s ease-in-out infinite;
+}
+@keyframes step-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 4px rgba(206, 226, 137, 0.28);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(206, 226, 137, 0.1);
+  }
+}
+.step.done {
+  background: var(--koi-blush);
+  border-color: var(--koi-blush);
+  color: var(--koi-rose);
+}
+.step-line {
+  width: 2.5rem;
+  height: 0.125rem;
+  background: var(--koi-blush);
+  align-self: center;
+  border-radius: var(--radius-line);
+}
+.step-label {
+  font-size: var(--fs-xs);
+  text-align: center;
+  color: var(--stone-moss);
+  margin-top: var(--space-7);
+  letter-spacing: 0.03125rem;
+}
+
+/* ─── Bottom bar ──────────────────────────────────────────────────────────────── */
+
+.bottom-bar {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 253, 249, 0.94);
+  backdrop-filter: blur(0.875rem);
+  border-top: 0.0625rem solid var(--koi-blush);
+  padding: var(--space-7) var(--space-12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+  animation: slide-up 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ─── Button components ───────────────────────────────────────────────────────── */
+
+/* Primary — clover-light bg, clover-deep text. Hover → koi-rose */
+.btn-primary {
+  background: var(--clover-light);
+  color: var(--clover-deep);
+  border: none;
+  padding: 0.8125rem 2.25rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-clover);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0);
+  transition: background var(--transition-fast);
+  border-radius: inherit;
+}
+.btn-primary:hover:not(:disabled)::after {
+  background: rgba(255, 255, 255, 0.12);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--koi-rose);
+  color: var(--lotus-white);
+  transform: translateY(-0.15rem);
+  box-shadow: var(--shadow-btn-hover);
+}
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+}
+.btn-primary:disabled {
+  background: #ddd;
+  color: #5c5c5c;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+.btn-primary svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+  transition: transform var(--transition-bounce);
+}
+.btn-primary:hover:not(:disabled) svg {
+  transform: translateX(3px);
+}
+
+/* Ghost button */
+.btn-ghost {
+  background: transparent;
+  color: var(--stone-moss);
+  border: 0.125rem solid var(--koi-blush);
+  padding: 0.8125rem 1.75rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  transition: all var(--transition-base);
+  width: 100%;
+}
+.btn-ghost:hover {
+  border-color: var(--clover-light);
+  color: var(--clover-deep);
+  background: rgba(206, 226, 137, 0.12);
+}
+.btn-ghost:active {
+  transform: scale(0.97);
+}
+.btn-ghost svg {
+  width: 1rem;
+  flex-shrink: 0;
+  transition: transform var(--transition-bounce);
+}
+.btn-ghost:hover svg {
+  transform: rotate(-20deg);
+}
+
+/* Text button */
+.btn-text {
+  background: transparent;
+  color: var(--stone-moss);
+  border: none;
+  padding: var(--space-2);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  transition: color var(--transition-fast);
+}
+.btn-text:hover {
+  color: var(--koi-rose);
+}
+
+/* Toggle button */
+.btn-toggle {
+  flex: 1;
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-sm);
+  border: 0.125rem solid var(--koi-blush);
+  background: #fff;
+  cursor: pointer;
+  font-size: var(--fs-sm);
+  color: var(--stone-moss);
+  transition: all var(--transition-bounce);
+  text-align: center;
+  font-weight: var(--fw-normal);
+  opacity: 0.7;
+}
+.btn-toggle:hover:not(.active) {
+  border-color: var(--koi-rose);
+  color: var(--koi-rose);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+.btn-toggle.active {
+  background: var(--clover-light);
+  border-color: var(--clover-light);
+  color: var(--clover-deep);
+  font-weight: var(--fw-medium);
+  box-shadow: var(--shadow-clover);
+  opacity: 1;
+}
+.btn-toggle:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: #f0f0f0;
+  border-color: #d0d0d0;
+  color: #999;
+}
+.btn-toggle:disabled:hover {
+  transform: none;
+  border-color: #d0d0d0;
+  color: #999;
+}
+
+/* ─── Page-specific button modifiers ─────────────────────────────────────────── */
+
+.btn-next {
+  letter-spacing: 0.01875rem;
+}
+
+.btn-start.capturing {
+  background: #b0b0b0;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.btn-download {
+  width: 100%;
+  padding: 0.9375rem 1.75rem;
+  font-size: var(--fs-xl);
+}
+
+@media (max-width: 40rem) {
+  .layout {
+    flex-direction: column;
+  }
+  .preview-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .strip-wrapper {
+    width: 10rem;
+  }
+  .grid {
+    grid-template-columns: repeat(2, 10rem);
+  }
+}
+
+@media (max-width: 25rem) {
+  html {
+    font-size: 12px;
+  }
+
+  .btn-toggle {
+    padding: 0.6rem 1.25rem;
+  }
+}

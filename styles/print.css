@@ -1,0 +1,291 @@
+/* ─── Print page ──────────────────────────────────────────────────────────────── */
+
+.print-scene {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--space-14) var(--space-12) var(--space-40);
+  gap: 0;
+  min-height: calc(100vh - 4rem);
+}
+
+/* Steps override for print page */
+.print-scene .steps-wrapper {
+  margin-top: var(--space-10);
+}
+
+@keyframes printer-settle {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.printer-body {
+  background: linear-gradient(160deg, #f5f0ee 0%, #e8e0dc 60%, #d8d0cc 100%);
+  border-radius: 1.25rem 1.25rem 0.75rem 0.75rem;
+  padding: 1.125rem 1.25rem 2.5rem;
+  box-shadow:
+    0 0.25rem 0 #c8c0bc,
+    0 0.5rem 1.5rem rgba(58, 44, 42, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  position: relative;
+}
+
+.printer-logo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+.printer-logo-text {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #a09090;
+  text-transform: uppercase;
+}
+.printer-lights {
+  display: flex;
+  gap: 0.3rem;
+}
+.printer-light {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--koi-blush);
+}
+.printer-light.green {
+  background: var(--clover-light);
+  animation: light-blink 1.4s ease-in-out infinite;
+}
+.printer-light.amber {
+  background: var(--koi-blush);
+}
+@keyframes light-blink {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 4px rgba(168, 212, 168, 0.5);
+  }
+  50% {
+    opacity: 0.35;
+    box-shadow: none;
+  }
+}
+
+.printer-base {
+  background: linear-gradient(180deg, #d0c8c4 0%, #c4bcb8 100%);
+  height: 1rem;
+  border-radius: 0 0 0.75rem 0.75rem;
+  box-shadow: 0 3px 0 #b8b0ac;
+}
+
+/* Wrapper that holds both printer and the emerging strip */
+.printer-strip-wrap {
+  position: relative;
+  width: 13rem;
+  margin-top: var(--space-16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Printer sits on top, covers the hidden part of the strip */
+.printer-machine {
+  position: relative;
+  z-index: 2;
+  width: 13rem;
+  flex-shrink: 0;
+  animation: printer-settle 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+/* Strip container — starts at 0 height; JS expands it as strip slides out */
+.strip-exit-zone {
+  position: relative;
+  z-index: -1;
+  width: 10rem;
+  height: 0;
+  overflow: hidden;
+  margin-top: 0;
+}
+
+.strip-paper {
+  z-index: 99;
+  width: 10rem;
+  position: relative;
+  border-radius: 0 0 0.375rem 0.375rem;
+  background: #fffef9;
+  overflow: hidden;
+  box-shadow: 2px 8px 22px rgba(58, 44, 42, 0.25);
+  will-change: transform;
+  transform: translateY(0);
+}
+
+/* Subtle feed-line texture on paper (horizontal scan-lines) */
+.strip-paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 5px,
+    rgba(0, 0, 0, 0.012) 5px,
+    rgba(0, 0, 0, 0.012) 6px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+#print-canvas {
+  display: block;
+  width: 100%;
+  image-rendering: crisp-edges;
+}
+
+/* Perforated tear edge at bottom */
+.strip-tear {
+  height: 0.75rem;
+  background: repeating-linear-gradient(
+    90deg,
+    #fff 0px,
+    #fff 4px,
+    transparent 4px,
+    transparent 7px
+  );
+  border-top: 1px dashed rgba(58, 44, 42, 0.15);
+  opacity: 0;
+  animation: tear-appear 0.3s ease 1.5s forwards;
+}
+@keyframes tear-appear {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Print progress bar inside printer */
+.printer-progress-track {
+  height: 0.1875rem;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  margin-top: 0.625rem;
+  overflow: hidden;
+}
+.printer-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--koi-blush), var(--koi-rose));
+  border-radius: 2px;
+  animation: progress-fill 2s linear forwards;
+  animation-play-state: paused;
+}
+@keyframes progress-fill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Motor buzz — active only while JS has .printing on the machine */
+.printer-machine.printing .printer-body {
+  animation: motor-buzz 0.05s ease-in-out infinite;
+}
+@keyframes motor-buzz {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(1px);
+  }
+  75% {
+    transform: translateX(-1px);
+  }
+}
+
+.print-status {
+  margin-top: var(--space-10);
+  font-size: var(--fs-sm);
+  color: var(--stone-moss);
+  font-style: italic;
+  text-align: center;
+  animation: page-fade-in 0.4s ease 0.5s both;
+  min-height: 1.4rem;
+  transition: opacity 0.3s ease;
+}
+.print-status strong {
+  color: var(--koi-rose);
+  font-style: normal;
+}
+
+.done-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  margin-top: var(--space-10);
+}
+.done-actions.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Strip glow when done */
+.strip-paper.done {
+  box-shadow:
+    2px 6px 18px rgba(58, 44, 42, 0.22),
+    0 0 0 3px var(--koi-blush);
+  animation: strip-glow 1s ease-in-out infinite;
+}
+@keyframes strip-glow {
+  0%,
+  100% {
+    box-shadow:
+      2px 6px 18px rgba(58, 44, 42, 0.22),
+      0 0 0 3px rgba(255, 222, 232, 0.5);
+  }
+  50% {
+    box-shadow:
+      2px 6px 24px rgba(58, 44, 42, 0.28),
+      0 0 0 5px rgba(255, 222, 232, 0.8);
+  }
+}
+
+/* Confetti petals on done */
+.petal {
+  position: fixed;
+  width: 0.5rem;
+  height: 0.75rem;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 20;
+  animation: petal-fall 1s ease-out forwards;
+}
+@keyframes petal-fall {
+  0% {
+    opacity: 0.9;
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(60vh) rotate(360deg);
+  }
+}

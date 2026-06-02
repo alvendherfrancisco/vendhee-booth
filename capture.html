@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Capture</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/menu.css" />
+    <link rel="stylesheet" href="styles/capture.css" />
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+  <body>
+    <header>
+      <button class="back-btn" onclick="window.location.href = 'mode.html'">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path d="M19 12H5M12 5l-7 7 7 7" />
+        </svg>
+        Back
+      </button>
+    </header>
+
+    <div class="steps-wrapper">
+      <div class="step-item">
+        <div class="step done">1</div>
+        <div class="step-label">Design</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step done">2</div>
+        <div class="step-label">Mode</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step active">3</div>
+        <div class="step-label">Capture</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item">
+        <div class="step">4</div>
+        <div class="step-label">Download</div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <!-- Camera + controls -->
+      <div class="camera-section">
+        <div class="panel">
+          <div class="panel-title">Live Preview</div>
+          <div class="camera-wrap" id="camera-wrap">
+            <video id="video" autoplay playsinline muted></video>
+            <div class="flash" id="flash"></div>
+            <div class="countdown-overlay">
+              <div class="countdown-num" id="countdown">3</div>
+            </div>
+            <div class="cam-perms-msg" id="cam-msg" style="display: none">
+              <div class="big-icon"></div>
+              <p>Camera access needed</p>
+              <button
+                class="btn-primary"
+                onclick="startCamera()"
+                style="margin-top: 4px; padding: 10px 20px; font-size: 0.85rem"
+              >
+                Allow Camera
+              </button>
+            </div>
+          </div>
+          <!-- Shot preview row -->
+          <div class="shots-row" id="shots-row">
+            <div class="shot-slot" id="slot0">
+              <div class="shot-num">1</div>
+            </div>
+            <div class="shot-slot" id="slot1">
+              <div class="shot-num">2</div>
+            </div>
+            <div class="shot-slot" id="slot2">
+              <div class="shot-num">3</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">Filter</div>
+          <div class="filter-row">
+            <button
+              class="btn-toggle filter-btn active"
+              data-filter="none"
+              onclick="setFilter('none', this)"
+            >
+              None
+            </button>
+            <button
+              class="btn-toggle filter-btn"
+              data-filter="sepia"
+              onclick="setFilter('sepia', this)"
+            >
+              Sepia
+            </button>
+            <button
+              class="btn-toggle filter-btn"
+              data-filter="bw"
+              onclick="setFilter('bw', this)"
+            >
+              B&amp;W
+            </button>
+            <button
+              class="btn-toggle filter-btn"
+              data-filter="vintage"
+              onclick="setFilter('vintage', this)"
+            >
+              Vintage
+            </button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">Countdown Timer</div>
+          <div class="timer-row">
+            <button
+              class="btn-toggle timer-btn active"
+              data-sec="3"
+              onclick="setTimer(3, this)"
+            >
+              3s
+            </button>
+            <button
+              class="btn-toggle timer-btn"
+              data-sec="5"
+              onclick="setTimer(5, this)"
+            >
+              5s
+            </button>
+            <button
+              class="btn-toggle timer-btn"
+              data-sec="10"
+              onclick="setTimer(10, this)"
+            >
+              10s
+            </button>
+          </div>
+        </div>
+
+        <div class="error-notice" id="error-notice">
+          ⚠️ Camera couldn't be accessed. Please allow camera permissions and
+          refresh.
+        </div>
+      </div>
+
+      <!-- Strip preview -->
+      <div class="preview-section">
+        <div class="panel panel-preview" style="padding: 14px">
+          <div class="panel-title" style="margin-bottom: 10px">
+            🎞 Your Strip
+          </div>
+          <div class="strip-wrapper" id="strip-wrapper">
+            <canvas id="strip-preview-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="bottom-bar">
+      <div class="shot-status" id="shot-status">
+        Ready to start — take <strong>3 photos</strong>
+      </div>
+      <button class="btn-primary btn-start" id="btn-start">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <circle cx="12" cy="12" r="4" fill="currentColor" />
+        </svg>
+        Start
+      </button>
+    </div>
+
+    <canvas id="canvas" style="display: none"></canvas>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/capture.js"></script>
+  </body>
+</html>

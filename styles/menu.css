@@ -22,7 +22,7 @@
 /* Staggered card entrance */
 .card {
   cursor: pointer;
-  background: var(--lotus-white);
+  background: var(--koi-mist);
   border-radius: var(--radius-md);
   padding: var(--space-7) var(--space-7) var(--space-9);
   box-shadow: var(--shadow-sm);

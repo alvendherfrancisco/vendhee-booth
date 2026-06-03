@@ -462,7 +462,16 @@ header {
   font-size: var(--fs-xl);
 }
 
-@media (max-width: 40rem) {
+@media (max-width: 62rem) {
+  .grid {
+    grid-template-columns: repeat(3, 10rem);
+  }
+  .layout {
+    width: 90%;
+  }
+}
+
+@media (max-width: 45rem) {
   .layout {
     flex-direction: column;
   }

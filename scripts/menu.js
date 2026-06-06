@@ -10,6 +10,8 @@ if (document.getElementById("grid")) {
     { id: 6, name: "Pond Whisper", tag: " T6" },
     { id: 7, name: "Lucky Tide", tag: " T7" },
     { id: 8, name: "Clover Pond ", tag: " T8" },
+    { id: 11, name: "Mori & Kira", tag: " T9" },
+    { id: 12, name: "Mori & Kira", tag: " T10" },
   ];
 
   let selected = null;
